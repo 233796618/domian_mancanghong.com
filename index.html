@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>域名合作 - 全网最低价</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   "PingFang SC", "Microsoft YaHei", sans-serif;
+      max-width: 640px;
+      margin: 60px auto;
+      padding: 0 24px;
+      color: #222;
+      line-height: 1.7;
+      background: #fafafa;
+    }
+    .label { color: #888; font-size: 14px; margin-bottom: 4px; }
+    .domain {
+      font-size: 26px; font-weight: 700; color: #111;
+      word-break: break-all; margin: 0 0 8px;
+    }
+    .sub {
+      font-size: 14px; color: #999; margin: 0 0 32px;
+      word-break: break-all;
+    }
+    .card {
+      background: #fff; border: 1px solid #eee; border-radius: 12px;
+      padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .card h2 { font-size: 18px; margin: 0 0 16px; color: #111; }
+    .row { margin-bottom: 14px; font-size: 15px; }
+    .row:last-child { margin-bottom: 0; }
+    .row .k { display: inline-block; width: 76px; color: #888; }
+    a { color: #0066cc; text-decoration: none; word-break: break-all; }
+    a:hover { text-decoration: underline; }
+    .note { margin-top: 28px; font-size: 13px; color: #aaa; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <p class="label">您正在访问：</p>
+  <h1 class="domain" id="domainName">加载中…</h1>
+  <p class="sub" id="subName"></p>
+
+  <div class="card">
+    <h2>合作 / 购买咨询</h2>
+    <div class="row"><span class="k">邮箱</span><a id="emailLink" href="#">加载中…</a></div>
+    <div class="row" id="wechatRow"><span class="k">微信</span><span id="wechatText">—</span></div>
+  </div>
+
+  <p class="note">本域名可出售 / 可合作，欢迎联系</p>
+
+  <script>
+    (function () {
+      var host = location.hostname;
+      var bare = host.replace(/^www\./, ''); // 去掉 www.
+
+      // ============================================================
+      // 👇 你只需要改这一段：填上真实的邮箱和微信
+      // ============================================================
+      var contactMap = {
+        // 主域名：全网最低价.com 的拼音版
+        'mancanghong.com': {
+          name:   '满仓红.com',
+          email:  '233796618@qq.com',   // ← 改这里
+          wechat: 'zhongxing089'              // ← 改这里（没有就留空字符串 ''）
+        },
+
+        // 如果你以后还绑定了中文域名 xn--6nq0hu3d154bjz1a.com，也一起写上
+        'xn--6nq0hu3d154bjz1a.com': {
+          name:   '全网最低价.com',
+          email:  '233796618@qq.com',
+          wechat: 'zhongxing089'
+        }
+      };
+      // ============================================================
+      // 下面不用动
+      // ============================================================
+
+
+      // 先按完整域名匹配，再按去掉 www. 的匹配
+      var info = contactMap[host] || contactMap[bare];
+
+      // 兜底
+      if (!info) {
+        info = {
+          name:   host,
+          email:  'contact@example.com',
+          wechat: ''
+        };
+      }
+
+      // 显示域名
+      document.getElementById('domainName').textContent = info.name || host;
+
+      // 如果显示名和真实域名不一样，用小字标出真实域名
+      if (info.name && info.name !== host) {
+        document.getElementById('subName').textContent = '（' + host + '）';
+      }
+
+      // 邮箱
+      var emailLink = document.getElementById('emailLink');
+      emailLink.href = 'mailto:' + info.email +
+        '?subject=' + encodeURIComponent('关于 ' + (info.name || host) + ' 的合作咨询');
+      emailLink.textContent = info.email;
+
+      // 微信（没填就隐藏整行）
+      if (info.wechat) {
+        document.getElementById('wechatText').textContent = info.wechat;
+      } else {
+        document.getElementById('wechatRow').style.display = 'none';
+      }
+    })();
+  </script>
+
+</body>
+</html>
